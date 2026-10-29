@@ -1,0 +1,89 @@
+<div class="app" id="app" data-me="{{me.id}}">
+    <div class="scrim" id="scrim"></div>
+
+    <aside class="sidebar glass" id="sidebar">
+        <div class="side-brand">
+            <span class="brand-mark">💬</span>
+            <span class="brand-name">Parche</span>
+        </div>
+
+        <div class="me-card c-{{me.color}}">
+            <span class="avatar md c-{{me.color}}">{{me.avatar}}<i class="dot online" id="myDot"></i></span>
+            <div class="me-info">
+                <b>{{me.name}}</b>
+                <small>{{#if me.bio}}{{me.bio}}{{else}}En línea{{/if}}</small>
+            </div>
+            <button class="icon-btn" id="leaveBtn" title="Salir del chat" aria-label="Salir del chat">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+            </button>
+        </div>
+
+        <h3 class="side-title">
+            En línea
+            <span class="count-pill" id="onlineCount">{{onlineCount}}</span>
+        </h3>
+
+        <ul class="user-list" id="userList">
+            {{#each users}}
+                <li class="user {{#if (eq id ../me.id)}}is-me{{/if}}" data-id="{{id}}">
+                    <span class="avatar c-{{color}}">{{avatar}}<i class="dot {{status}}"></i></span>
+                    <div class="user-info">
+                        <b>{{name}}{{#if (eq id ../me.id)}} <em>(tú)</em>{{/if}}</b>
+                        <small>{{#if bio}}{{bio}}{{else}}{{#if (eq status "away")}}Ausente{{else}}En línea{{/if}}{{/if}}</small>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+
+        <p class="side-hint" id="aloneHint">Abre otra pestaña o comparte el enlace para que alguien más se una ✨</p>
+    </aside>
+
+    <section class="chat">
+        <header class="chat-header glass">
+            <button class="icon-btn menu-btn" id="menuBtn" aria-label="Ver personas en línea">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+            </button>
+            <div class="room-title">
+                <h2><span class="hash">#</span>general</h2>
+                <small><span class="live-dot"></span><span id="headerCount">{{onlineCount}}</span> en línea · <span id="connState">conectado</span></small>
+            </div>
+            <div class="header-stack" id="headerStack"></div>
+        </header>
+
+        <div class="messages" id="messages">
+            <div class="welcome">
+                <div class="welcome-emoji">👋</div>
+                <h3>¡Bienvenid@, {{me.name}}!</h3>
+                <p>Este es el comienzo de <b>#general</b>. Saluda, sé amable y pásala bien.</p>
+            </div>
+            {{#each messages}}
+                {{#if (eq type "system")}}
+                    <div class="sys {{kind}}" data-id="{{id}}"><span>{{avatar}} <b>{{name}}</b> {{text}}</span></div>
+                {{else}}
+                    <div class="msg {{#if (eq userId ../me.id)}}mine{{/if}}" data-id="{{id}}" data-user="{{userId}}" data-ts="{{ts}}">
+                        <span class="avatar c-{{color}}">{{avatar}}</span>
+                        <div class="msg-body">
+                            <div class="msg-meta"><b class="msg-name t-{{color}}">{{name}}</b><time data-ts="{{ts}}"></time></div>
+                            <div class="bubble c-{{color}}">{{text}}</div>
+                        </div>
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+
+        <div class="typing" id="typing" aria-live="polite"></div>
+
+        <button class="jump" id="jumpBtn" aria-label="Ir a mensajes nuevos">Mensajes nuevos ↓</button>
+
+        <form class="composer glass" id="composer" autocomplete="off">
+            <div class="emoji-panel glass" id="emojiPanel">
+                {{#each emojis}}<button type="button" class="emoji">{{this}}</button>{{/each}}
+            </div>
+            <button type="button" class="icon-btn" id="emojiBtn" aria-label="Emojis">😊</button>
+            <input type="text" id="msgInput" maxlength="500" placeholder="Escribe un mensaje…" aria-label="Mensaje">
+            <button type="submit" class="send-btn c-{{me.color}}" id="sendBtn" aria-label="Enviar">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+            </button>
+        </form>
+    </section>
+</div>

@@ -1,0 +1,91 @@
+<main class="login">
+    <section class="login-card glass" id="loginCard">
+        <header class="brand reveal" style="--d:0">
+            <span class="brand-mark">💬</span>
+            <span class="brand-name">Parche</span>
+            <span class="brand-tag">chat en vivo</span>
+        </header>
+
+        <div class="reveal" style="--d:1">
+            <h1>Antes de entrar,<br><span class="grad-text">cuéntanos quién eres</span></h1>
+            <p class="lead">Arma tu perfil y únete a la conversación. Los demás te verán en línea al instante.</p>
+        </div>
+
+        <div class="online-peek reveal" style="--d:2">
+            {{#if onlineCount}}
+                <div class="stack">
+                    {{#each online}}
+                        <span class="avatar sm c-{{color}}" title="{{name}}">{{avatar}}</span>
+                    {{/each}}
+                    {{#if extraOnline}}<span class="avatar sm more">+{{extraOnline}}</span>{{/if}}
+                </div>
+                <span><span class="live-dot"></span><b>{{onlineCount}}</b> en línea ahora</span>
+            {{else}}
+                <span><span class="live-dot"></span>Sala abierta · ¡sé la primera persona en llegar!</span>
+            {{/if}}
+        </div>
+
+        <form id="joinForm" class="join-form" novalidate autocomplete="off">
+            <label class="field reveal" style="--d:3">
+                <span class="field-label"><span class="step">1</span> ¿Cómo te llamamos?</span>
+                <input type="text" id="name" name="name" maxlength="20" placeholder="Tu nombre o apodo" required autofocus>
+            </label>
+
+            <fieldset class="field reveal" style="--d:4">
+                <legend class="field-label"><span class="step">2</span> Elige tu avatar</legend>
+                <div class="avatar-grid">
+                    {{#each avatars}}
+                        <label class="avatar-opt">
+                            <input type="radio" name="avatar" value="{{this}}" {{#if @first}}checked{{/if}}>
+                            <span>{{this}}</span>
+                        </label>
+                    {{/each}}
+                </div>
+            </fieldset>
+
+            <fieldset class="field reveal" style="--d:5">
+                <legend class="field-label"><span class="step">3</span> Tu color</legend>
+                <div class="color-row">
+                    {{#each colors}}
+                        <label class="color-opt c-{{key}}" title="{{label}}">
+                            <input type="radio" name="color" value="{{key}}" {{#if @first}}checked{{/if}}>
+                            <span class="swatch"></span>
+                            <span class="color-name">{{label}}</span>
+                        </label>
+                    {{/each}}
+                </div>
+            </fieldset>
+
+            <label class="field reveal" style="--d:6">
+                <span class="field-label"><span class="step">4</span> Tu estado <em>(opcional)</em></span>
+                <input type="text" id="bio" name="bio" maxlength="60" placeholder="Ej: estudiando para el parcial 📚">
+            </label>
+
+            <p class="form-error" id="formError" role="alert"></p>
+
+            <button type="submit" class="btn-primary reveal" style="--d:7" id="joinBtn">
+                <span class="btn-label">Entrar al chat</span>
+                <span class="btn-arrow">→</span>
+                <span class="btn-spinner"></span>
+            </button>
+        </form>
+    </section>
+
+    <aside class="preview reveal" style="--d:3" aria-label="Vista previa de tu perfil">
+        <p class="preview-kicker">Así te verán</p>
+        <div class="profile-card glass c-violeta" id="previewCard">
+            <div class="profile-glow"></div>
+            <div class="profile-avatar" id="pvAvatar">🦊</div>
+            <div class="profile-name" id="pvName">Tu nombre</div>
+            <div class="profile-bio" id="pvBio">Sin estado</div>
+            <div class="profile-status"><span class="dot online"></span> En línea</div>
+        </div>
+        <div class="preview-bubble glass">
+            <span class="avatar xs c-violeta" id="pvMini">🦊</span>
+            <div>
+                <b id="pvMiniName">Tu nombre</b>
+                <p>¡Hola a todos! 👋</p>
+            </div>
+        </div>
+    </aside>
+</main>

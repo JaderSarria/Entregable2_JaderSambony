@@ -1,0 +1,14 @@
+<div>
+    <h1>Hola {{username}} desde un Motor de Plantillas</h1>
+    {{#if admin}}
+        <h2>ERES UN ADMINISTRADOR</h2>
+        {{#each product}}
+            <p>{{this.name_product}} ||  US${{this.price}}</p>
+            <hr>            
+        {{/each}}
+    {{else}}
+        <h2>NO ERES UN ADMINISTRADOR</h2>
+    {{/if}}
+
+    <a href="./contact">Ir a Contacto</a>
+</div>
